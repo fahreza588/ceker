@@ -17,6 +17,7 @@ $checkTotal = 0;
 $amountList = count($delimeter);
 
 foreach($delimeter as $format) {
+$format = trim($format);
     $response = file_get_contents("http://malenk.io/fhAPI/?format=".trim($format));
     if(json_decode($response,1)['status'] == "LIVE") {
       echo "[".date("Y-m-d H:i:s")."] [".$checkTotal."/".$amountList."] ".$format." => LIVE\n";
